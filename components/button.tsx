@@ -1,4 +1,6 @@
+
 import React from "react";
+import { colors } from "../styles/commonStyles";
 import {
   ActivityIndicator,
   Pressable,
@@ -8,10 +10,9 @@ import {
   useColorScheme,
   ViewStyle,
 } from "react-native";
-import { appleBlue, zincColors } from "@/constants/Colors";
 
-type ButtonVariant = "filled" | "outline" | "ghost";
-type ButtonSize = "sm" | "md" | "lg";
+type ButtonVariant = 'primary' | 'secondary' | 'danger';
+type ButtonSize = 'small' | 'medium' | 'large';
 
 interface ButtonProps {
   onPress?: () => void;
@@ -24,105 +25,112 @@ interface ButtonProps {
   textStyle?: TextStyle;
 }
 
-export const Button: React.FC<ButtonProps> = ({
-  onPress,
-  variant = "filled",
-  size = "md",
-  disabled = false,
-  loading = false,
-  children,
-  style,
-  textStyle,
-}) => {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === "dark";
-
-  const sizeStyles: Record<
-    ButtonSize,
-    { height: number; fontSize: number; padding: number }
-  > = {
-    sm: { height: 36, fontSize: 14, padding: 12 },
-    md: { height: 44, fontSize: 16, padding: 16 },
-    lg: { height: 55, fontSize: 18, padding: 20 },
-  };
-
-  const getVariantStyle = () => {
+export function Button({ 
+  onPress, 
+  variant = 'primary', 
+  size = 'medium', 
+  disabled = false, 
+  loading = false, 
+  children, 
+  style, 
+  textStyle 
+}: ButtonProps) {
+  const getButtonStyle = (): ViewStyle => {
     const baseStyle: ViewStyle = {
-      borderRadius: 12,
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
+      borderRadius: 8,
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'row',
     };
 
-    switch (variant) {
-      case "filled":
-        return {
-          ...baseStyle,
-          backgroundColor: isDark ? zincColors[50] : zincColors[900],
-        };
-      case "outline":
-        return {
-          ...baseStyle,
-          backgroundColor: "transparent",
-          borderWidth: 1,
-          borderColor: isDark ? zincColors[700] : zincColors[300],
-        };
-      case "ghost":
-        return {
-          ...baseStyle,
-          backgroundColor: "transparent",
-        };
+    // Size styles
+    switch (size) {
+      case 'small':
+        baseStyle.paddingVertical = 8;
+        baseStyle.paddingHorizontal = 12;
+        break;
+      case 'large':
+        baseStyle.paddingVertical = 16;
+        baseStyle.paddingHorizontal = 24;
+        break;
+      default: // medium
+        baseStyle.paddingVertical = 12;
+        baseStyle.paddingHorizontal = 16;
+        break;
     }
+
+    // Variant styles
+    switch (variant) {
+      case 'secondary':
+        baseStyle.backgroundColor = colors.backgroundAlt;
+        baseStyle.borderWidth = 1;
+        baseStyle.borderColor = colors.border;
+        break;
+      case 'danger':
+        baseStyle.backgroundColor = colors.danger;
+        break;
+      default: // primary
+        baseStyle.backgroundColor = colors.primary;
+        break;
+    }
+
+    // Disabled state
+    if (disabled || loading) {
+      baseStyle.opacity = 0.6;
+    }
+
+    return baseStyle;
   };
 
-  const getTextColor = () => {
-    if (disabled) {
-      return isDark ? zincColors[500] : zincColors[400];
+  const getTextStyle = (): TextStyle => {
+    const baseStyle: TextStyle = {
+      fontWeight: '600',
+    };
+
+    // Size styles
+    switch (size) {
+      case 'small':
+        baseStyle.fontSize = 14;
+        break;
+      case 'large':
+        baseStyle.fontSize = 18;
+        break;
+      default: // medium
+        baseStyle.fontSize = 16;
+        break;
     }
 
+    // Variant styles
     switch (variant) {
-      case "filled":
-        return isDark ? zincColors[900] : zincColors[50];
-      case "outline":
-      case "ghost":
-        return appleBlue;
+      case 'secondary':
+        baseStyle.color = colors.text;
+        break;
+      default: // primary, danger
+        baseStyle.color = 'white';
+        break;
     }
+
+    return baseStyle;
   };
 
   return (
     <Pressable
       onPress={onPress}
       disabled={disabled || loading}
-      style={[
-        getVariantStyle(),
-        {
-          height: sizeStyles[size].height,
-          paddingHorizontal: sizeStyles[size].padding,
-          opacity: disabled ? 0.5 : 1,
-        },
-        style,
-      ]}
+      style={[getButtonStyle(), style]}
     >
-      {loading ? (
-        <ActivityIndicator color={getTextColor()} />
-      ) : (
-        <Text
-          style={StyleSheet.flatten([
-            {
-              fontSize: sizeStyles[size].fontSize,
-              color: getTextColor(),
-              textAlign: "center",
-              marginBottom: 0,
-              fontWeight: "700",
-            },
-            textStyle,
-          ])}
-        >
-          {children}
-        </Text>
+      {loading && (
+        <ActivityIndicator 
+          size="small" 
+          color={variant === 'secondary' ? colors.primary : 'white'} 
+          style={{ marginRight: 8 }} 
+        />
       )}
+      <Text style={[getTextStyle(), textStyle]}>
+        {children}
+      </Text>
     </Pressable>
   );
-};
+}
 
 export default Button;

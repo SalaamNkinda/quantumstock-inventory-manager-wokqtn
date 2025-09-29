@@ -1,89 +1,139 @@
+
 import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
 
 export const colors = {
-  primary: '#162456',    // Material Blue
-  secondary: '#193cb8',  // Darker Blue
-  accent: '#64B5F6',     // Light Blue
-  background: '#101824',  // Keeping dark background
-  backgroundAlt: '#162133',  // Keeping dark background
-  text: '#e3e3e3',       // Keeping light text
-  grey: '#90CAF9',       // Light Blue Grey
-  card: '#193cb8',       // Keeping dark card background
+  primary: '#2563eb',      // Professional Blue
+  secondary: '#1e40af',    // Darker Blue
+  accent: '#3b82f6',       // Light Blue
+  success: '#10b981',      // Green
+  warning: '#f59e0b',      // Orange
+  danger: '#ef4444',       // Red
+  background: '#ffffff',   // White background for light theme
+  backgroundAlt: '#f8fafc', // Light grey background
+  text: '#1f2937',         // Dark text
+  textSecondary: '#6b7280', // Grey text
+  border: '#e5e7eb',       // Light border
+  card: '#ffffff',         // White card background
+  shadow: 'rgba(0, 0, 0, 0.1)',
 };
 
 export const buttonStyles = StyleSheet.create({
-  instructionsButton: {
+  primary: {
     backgroundColor: colors.primary,
-    alignSelf: 'center',
-    width: '100%',
+    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
-  backButton: {
+  secondary: {
     backgroundColor: colors.backgroundAlt,
-    alignSelf: 'center',
-    width: '100%',
+    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  danger: {
+    backgroundColor: colors.danger,
+    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
 });
 
 export const commonStyles = StyleSheet.create({
   wrapper: {
     backgroundColor: colors.background,
-    width: '100%',
-    height: '100%',
+    flex: 1,
   },
   container: {
     flex: 1,
     backgroundColor: colors.background,
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingHorizontal: 16,
   },
   content: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     maxWidth: 800,
     width: '100%',
+    alignSelf: 'center',
   },
   title: {
-    fontSize: 24,
-    fontWeight: '800',
-    textAlign: 'center',
+    fontSize: 28,
+    fontWeight: '700',
     color: colors.text,
-    marginBottom: 10
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: colors.text,
+    marginBottom: 16,
   },
   text: {
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: '400',
     color: colors.text,
-    marginBottom: 8,
     lineHeight: 24,
-    textAlign: 'center',
+  },
+  textSecondary: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: colors.textSecondary,
+    lineHeight: 20,
   },
   section: {
-    width: '100%',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-  },
-  buttonContainer: {
-    width: '100%',
-    alignItems: 'center',
-    paddingHorizontal: 20,
+    marginBottom: 24,
   },
   card: {
-    backgroundColor: colors.backgroundAlt,
-    borderColor: colors.grey,
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 10,
-    marginVertical: 8,
-    width: '100%',
-    boxShadow: '0px 2px 3px rgba(0, 0, 0, 0.1)',
+    backgroundColor: colors.card,
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 16,
+    boxShadow: `0px 2px 8px ${colors.shadow}`,
     elevation: 2,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
-  icon: {
-    width: 60,
-    height: 60,
-    tintColor: "white",
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 16,
+    backgroundColor: colors.background,
+    color: colors.text,
+  },
+  inputFocused: {
+    borderColor: colors.primary,
+    boxShadow: `0px 0px 0px 3px ${colors.primary}20`,
+  },
+  badge: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  badgeSuccess: {
+    backgroundColor: colors.success + '20',
+    color: colors.success,
+  },
+  badgeWarning: {
+    backgroundColor: colors.warning + '20',
+    color: colors.warning,
+  },
+  badgeDanger: {
+    backgroundColor: colors.danger + '20',
+    color: colors.danger,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: colors.border,
+    marginVertical: 16,
   },
 });
